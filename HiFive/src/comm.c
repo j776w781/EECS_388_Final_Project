@@ -16,7 +16,6 @@ void auto_brake(int devid)
     uint8_t low = ser_read(devid);
     uint8_t high = ser_read(devid);
     dist = (high << 8) + low;
-    printf("%d", dist);
     if (dist > 200) {
         gpio_write(RED_LED, OFF);
         gpio_write(GREEN_LED, ON);
