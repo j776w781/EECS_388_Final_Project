@@ -93,7 +93,8 @@ while(1):
 		if count%4 == 0:
 			pass
 			#Your code here.
-
+			prediction = bytes(deg)
+			ser1.write(prediction)
 		
         
         
