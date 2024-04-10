@@ -93,6 +93,7 @@ while(1):
 		if count%4 == 0:
 			pass
 			#Your code here.
+			#Consider using str() instead of bytes(), since sscanf is expecting a string?
 			prediction = bytes(deg)
 			ser1.write(prediction)
 		
