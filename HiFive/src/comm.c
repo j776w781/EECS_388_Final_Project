@@ -3,6 +3,9 @@
 #include <string.h>
 
 #include "eecs388_lib.h"
+#define SERVO_PULSE_MAX 2400    /* 2400 us */
+#define SERVO_PULSE_MIN 544     /* 544 us */
+#define SERVO_PERIOD    20000   /* 20000 us (20ms) */
 
 void auto_brake(int devid)
 {
