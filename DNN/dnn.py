@@ -91,11 +91,12 @@ while(1):
 		# prediction from the model. This is so that
 		# the HiFive can run the other functions in between
 		if count%4 == 0:
-			pass
-			#Your code here.
-			#Consider using str() instead of bytes(), since sscanf is expecting a string?
-			prediction = bytes(deg)
-			ser1.write(prediction)
+                    prediction = int(deg)
+                    prediction = str(prediction) + '\n'
+                    prediction = bytes(prediction)
+                    ser1.write(prediction)
+			
+
 		
         
         
