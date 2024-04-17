@@ -12,10 +12,14 @@ void auto_brake(int devid)
     // Task-1: 
     // Your code here (Use Lab 02 - Lab 04 for reference)
     // Use the directions given in the project document
+if ('Y' == ser_read(devid) && 'Y' == ser_read(devid)) {
     uint16_t dist = 0;
-    uint8_t low = ser_read(devid);
-    uint8_t high = ser_read(devid);
+    uint8_t low = 0;
+    uint8_t high = 0;
+    low = ser_read(devid);
+    high = ser_read(devid);
     dist = (high << 8) + low;
+    printf("%d\n", dist);
     if (dist > 200) {
         gpio_write(RED_LED, OFF);
         gpio_write(GREEN_LED, ON);
@@ -32,18 +36,23 @@ void auto_brake(int devid)
         gpio_write(RED_LED, OFF);
         delay(100);
     }
+    }
+    
 }
 
 int read_from_pi(int devid)
 {
+     int deg;
     // Task-2: 
     // You code goes here (Use Lab 09 for reference)
     // After performing Task-2 at dnn.py code, modify this part to read angle values from Raspberry Pi.
+    if (ser_isready(devid)) {
     char input[100];
-    int deg = 0;
-    ser_readline(devid,100,input);
-    sscanf(input, "%d", deg);
+    ser_readline(devid,50,input);
+    sscanf(input, "%d", &deg);
+    }
     return deg;
+    
 }
 
 void steering(int gpio, int pos)
@@ -79,6 +88,7 @@ int main()
 
     printf("Setup completed.\n");
     printf("Begin the main loop.\n");
+
     while (1) {
 
         auto_brake(lidar_to_hifive); // measuring distance using lidar and braking
@@ -86,6 +96,7 @@ int main()
         printf("\nangle=%d", angle) 
         int gpio = PIN_19; 
         for (int i = 0; i < 10; i++){
+            auto_brake(lidar_to_hifive); // measuring distance using lidar and braking
             // Here, we set the angle to 180 if the prediction from the DNN is a positive angle
             // and 0 if the prediction is a negative angle.
             // This is so that it is easier to see the movement of the servo.
@@ -98,7 +109,6 @@ int main()
             else {
                 steering(gpio,0);
             }
-            
             // Uncomment the line below to see the actual angles on the servo.
             // Remember to comment out the if-else statement above!
             // steering(gpio, angle);
